@@ -2,10 +2,10 @@ node() {
 stage('codecheckout'){
  https://github.com/snagarajudmm/my-app.git
 }
+}
 def mvnHome = tool 'MAVEN_HOME'
 def os = System.properties['os.name'].toLowerCase()
 stage('compile'){
-
     echo "OS: ${os}"
     if (os.contains("linux")) {
       sh "mvn compile" 
