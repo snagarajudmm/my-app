@@ -1,23 +1,30 @@
 node{
    stage('SCM Checkout'){
-     git 'https://github.com/javahometech/my-app'
+     git 'https://github.com/snagarajudmm/myweb.git'
    }
-   stage('Compile-Package'){
+ stage('Compile'){
       // Get maven home path
-      def mvnHome =  tool name: 'maven-3', type: 'maven'   
-      sh "${mvnHome}/bin/mvn package"
+      def mvnHome =  tool name: 'maven-3', type: 'maven'
+      sh "${mvnHome}/bin/mvn compile"
+    }
+ }
+ stage('SonarQube Analysis') {
+        def mvnHome =  tool name: 'maven-3', type: 'maven'
+        withSonarQubeEnv('sonarqube-6.7.6') {
+          sh "${mvnHome}/bin/mvn sonar:sonar"
+        }
+  stage('test'){
+      // Get maven home path
+      def mvnHome =  tool name: 'maven-3', type: 'maven'
+      sh "${mvnHome}/bin/mvn compile"
+    }
+    }
+    junit 'target\\surefire-reports\\*.xml'
    }
-   stage('Email Notification'){
-      mail bcc: '', body: '''Hi Welcome to jenkins email alerts
-      Thanks
-      Hari''', cc: '', from: '', replyTo: '', subject: 'Jenkins Job', to: 'hari.kammana@gmail.com'
-   }
-   stage('Slack Notification'){
-       slackSend baseUrl: 'https://hooks.slack.com/services/',
-       channel: '#jenkins-pipeline-demo',
-       color: 'good', 
-       message: 'Welcome to Jenkins, Slack!', 
-       teamDomain: 'javahomecloud',
-       tokenCredentialId: 'slack-demo'
-   }
-}
+  stage('package'){
+      // Get maven home path
+      def mvnHome =  tool name: 'maven-3', type: 'maven'
+      sh "${mvnHome}/bin/mvn compile"
+    }
+    }
+
