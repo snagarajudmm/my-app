@@ -9,14 +9,6 @@ node{
  stage('SonarQube Analysis') {
           sh "mvn sonar:sonar" 
         }
-  stage('test'){
-      sh "mvn test"
-    }
- {
-    junit 'target\\surefire-reports\\*.xml'
-   }
-  stage('package'){
-      sh "package"
-    }
+  
     
 
