@@ -5,18 +5,18 @@ node{
  stage('Compile'){
       // Get maven home path
       def mvnHome =  tool name: 'maven-3', type: 'maven'
-      sh "${mvnHome}/bin/mvn compile"
+      sh "mvn compile"
     }
  }
  stage('SonarQube Analysis') {
         def mvnHome =  tool name: 'maven-3', type: 'maven'
         withSonarQubeEnv('sonarqube-6.7.6') {
-          sh "${mvnHome}/bin/mvn sonar:sonar"
+          sh "mvn sonar:sonar"
         }
   stage('test'){
       // Get maven home path
       def mvnHome =  tool name: 'maven-3', type: 'maven'
-      sh "${mvnHome}/bin/mvn compile"
+      sh "mvn test"
     }
     }
     junit 'target\\surefire-reports\\*.xml'
@@ -24,7 +24,7 @@ node{
   stage('package'){
       // Get maven home path
       def mvnHome =  tool name: 'maven-3', type: 'maven'
-      sh "${mvnHome}/bin/mvn compile"
+      sh "package"
     }
     }
 
